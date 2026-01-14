@@ -1,0 +1,281 @@
+debug: Found portal inhibitor
+debug: Attempted path: /usr/local/bin/../share/obs/obs-studio/locale/en-US.ini
+debug: Attempted path: /usr/local/bin/../share/obs/obs-studio/locale.ini
+debug: Attempted path: /usr/local/bin/../share/obs/obs-studio/themes
+debug: Attempted path: /usr/local/bin/../share/obs/obs-studio/themes/
+warning: [Safe Mode] Unclean shutdown detected!
+warning: [Safe Mode] User elected to launch normally.
+info: Platform: Wayland
+info: CPU Name: 12th Gen Intel(R) Core(TM) i9-12900K
+info: CPU Speed: 799.991MHz
+info: Physical Cores: 16, Logical Cores: 24
+info: Physical Memory: 96290MB Total, 52677MB Free
+info: Kernel Version: Linux 6.17.9-76061709-generic
+info: Distribution: "Pop!_OS" "24.04"
+info: Desktop Environment: COSMIC (COSMIC)
+info: Session Type: wayland
+info: Current Date/Time: 2026-01-12, 08:36:13 PM
+info: Browser Hardware Acceleration: true
+info: Qt Version: 6.4.2 (runtime), 6.4.2 (compiled)
+info: Portable mode: false
+info: Pombomb Media OBS 31.1.0-rc1-modified Pombomb Media (linux)
+info: ---------------------------------
+info: ---------------------------------
+info: audio settings reset:
+	samples per sec: 44100
+	speakers:        2
+	max buffering:   23 milliseconds
+	buffering type:  fixed
+info: ---------------------------------
+info: Initializing OpenGL...
+info: Using EGL/Wayland
+info: Initialized EGL 1.5
+info: Loading up OpenGL on adapter Intel Mesa Intel(R) Arc(tm) A770 Graphics (DG2)
+info: OpenGL loaded successfully, version 4.6 (Core Profile) Mesa 25.1.5-1pop0~1753463422~24.04~8af185e, shading language 4.60
+info: Enabling fixed audio buffering, total audio buffering is now 23 milliseconds
+info: ---------------------------------
+info: video settings reset:
+	base resolution:   1920x1080
+	output resolution: 1920x1080
+	downscale filter:  Bicubic
+	fps:               30/1
+	format:            I420
+	YUV mode:          Rec. 709/Partial
+info: NV12 texture support not available
+info: P010 texture support not available
+info: Audio monitoring device:
+	name: PCM2900C Audio CODEC Analog Stereo
+	id: alsa_output.usb-BurrBrown_from_Texas_Instruments_USB_AUDIO_CODEC-00.analog-stereo
+info: ---------------------------------
+info: [3D Effect] loaded version 0.1.4
+info: [adv-ss] version: 1.32.5
+info: [adv-ss] version: 6314de8f37f574de0fbbb783778e83a826b94ab3
+info: [adv-ss] not using KWin compat
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-opencv.so"
+info: [adv-ss] successfully loaded "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-opencv.so"
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-http.so"
+info: [adv-ss] successfully loaded "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-http.so"
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-twitch.so"
+info: [adv-ss] successfully loaded "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-twitch.so"
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-mqtt.so"
+warning: [adv-ss] failed to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-mqtt.so": Cannot load library /usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-mqtt.so: (libpaho-mqttpp3.so.1: cannot open shared object file: No such file or directory)
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-midi.so"
+info: [adv-ss] successfully loaded "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-midi.so"
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-scripting.so"
+info: [adv-ss] successfully loaded "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-scripting.so"
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-base.so"
+info: [adv-ss] successfully loaded "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-base.so"
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-stream-deck.so"
+info: [adv-ss] successfully loaded "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-stream-deck.so"
+info: [adv-ss] attempting to load "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-usb.so"
+info: [adv-ss] successfully loaded "/usr/local/lib/obs-plugins/advanced-scene-switcher-plugins/advanced-scene-switcher-usb.so"
+info: [adv-ss] setupMidiDeviceObservers complete
+warning: Failed to load 'en-US' text for module: 'aja-output-ui.so'
+warning: No AJA devices found, skipping loading AJA UI plugin
+warning: Failed to initialize module 'aja-output-ui.so'
+warning: Failed to load 'en-US' text for module: 'aja.so'
+warning: No AJA devices found, skipping loading AJA plugin
+warning: Failed to initialize module 'aja.so'
+info: [Audio Monitor] loaded version 0.10.0
+warning: Failed to load 'en-US' text for module: 'decklink-captions.so'
+warning: Failed to load 'en-US' text for module: 'decklink-output-ui.so'
+libDeckLinkAPI.so: cannot open shared object file: No such file or directory
+warning: A DeckLink iterator could not be created.  The DeckLink drivers may not be installed
+warning: Failed to initialize module 'decklink.so'
+warning: Failed to load 'en-US' text for module: 'draw-dock.so'
+info: [Draw Dock] loaded version 0.3.1
+warning: Failed to load 'en-US' text for module: 'droidcam-obs.so'
+info: [droidcam-obs] module loaded release 241 (pop)
+warning: Failed to load 'en-US' text for module: 'linux-jack.so'
+warning: Failed to load 'en-US' text for module: 'linux-pipewire-audio.so'
+info: [pipewire] Available capture sources:
+info: [pipewire]     - Monitor source
+info: [pipewire]     - Window source
+info: [Move Transition] loaded version 3.2.0
+info: [obs-backgroundremoval] Plugin loaded successfully (version 1.3.5)
+info: [obs-backgroundremoval] Failed to open config file /home/papaya/.config/obs-studio/plugin_config/obs-backgroundremoval/config.ini
+info: [obs-backgroundremoval] Failed to open config file /home/papaya/.config/obs-studio/plugin_config/obs-backgroundremoval/config.ini
+info: [obs-backgroundremoval] Latest release is 
+info: [obs-browser]: Version 2.26.3
+info: [obs-browser]: CEF Version 127.0.6533.120 (runtime), 127.0.0-6533-fix-stutter-and-osr-extra-info.3042+g176b09c+chromium-127.0.6533.120 (compiled)
+info: [OBS Composite Blur] loaded version 0.0.3
+info: VAAPI: API version 1.22
+info: FFmpeg VAAPI H264 encoding supported
+info: FFmpeg VAAPI AV1 encoding supported
+info: FFmpeg VAAPI HEVC encoding supported
+warning: Failed to load 'en-US' text for module: 'obs-midi-mg.so'
+info: [obs-midi-mg] Loading plugin (v3.0.3)...
+info: [obs-midi-mg] [Configuration] Initializing MIDI...
+info: [obs-midi-mg] [MIDI] Device <Midi Through Port-0> detected.
+info: [obs-midi-mg] [MIDI] Device <USB Device 0x1a86:0xe02b MIDI 1> detected.
+info: [obs-midi-mg] [Configuration] MIDI initialized.
+info: [obs-midi-mg] [Configuration] Loading configuration...
+info: [obs-midi-mg] [Configuration] Loading configuration file data from /home/papaya/.config/obs-studio/plugin_config/obs-midi-mg/obs-midi-mg-config.json...
+info: [obs-midi-mg] [Configuration] Configuration file data loaded. Extracting...
+info: [obs-midi-mg] [Configuration] Configuration loading complete.
+info: [obs-midi-mg] Plugin loaded.
+error: os_dlopen(libnvidia-encode.so.1->libnvidia-encode.so.1): libnvidia-encode.so.1: cannot open shared object file: No such file or directory
+
+info: NVENC not supported
+warning: Failed to initialize module 'obs-nvenc.so'
+warning: Failed to load 'en-GB' text for module: 'obs-ptz.so'
+info: [obs-ptz] plugin loaded successfully (version v0.18.2-rc1)
+warning: QString::arg: Argument missing: "PTZ.PresetNum" , 0
+warning: QString::arg: Argument missing: "PTZ.PresetNum" , 1
+warning: QString::arg: Argument missing: "PTZ.PresetNum" , 2
+warning: QString::arg: Argument missing: "PTZ.PresetNum" , 3
+warning: QString::arg: Argument missing: "PTZ.PresetNum" , 4
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 1
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 1
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 2
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 2
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 3
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 3
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 4
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 4
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 5
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 5
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 6
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 6
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 7
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 7
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 8
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 8
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 9
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 9
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 10
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 10
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 11
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 11
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 12
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 12
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 13
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 13
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 14
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 14
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 15
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 15
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.RecallNum" , 16
+warning: QString::arg: Argument missing: "PTZ.Action.Preset.SaveNum" , 16
+warning: Failed to load 'en-US' text for module: 'obs-quick-access-utility.so'
+info: [Quick Access Utility] Loaded version 1.0.4
+info: [obs-shaderfilter] loaded version 2.5.1
+warning: Failed to load 'en-US' text for module: 'obs-soundboard.so'
+info: Soundboard plugin version 2.0.0 is loaded
+info: [obs-websocket] [obs_module_load] you can haz websockets (Version: 5.6.1 | RPC Version: 1)
+info: [obs-websocket] [obs_module_load] Qt version (compile-time): 6.4.2 | Qt version (run-time): 6.4.2
+info: [obs-websocket] [obs_module_load] Linked ASIO Version: 102801
+warning: DEPRECATION: obs_frontend_get_global_config is deprecated. Read from global or user configuration explicitly instead.
+info: [obs-websocket] [obs_module_load] Module loaded.
+info: [Source Clone] loaded version 0.2.0
+info: [Source Dock] loaded version 0.5.0
+info: [Source Record] loaded version 0.4.6
+info: [vlc-video]: VLC 3.0.20 Vetinari found, VLC video source enabled
+warning: Failed to load 'en-US' text for module: 'waveform.so'
+info: [phandasm_waveform]: Registered v1.9.0-beta1 x64
+info: [phandasm_waveform]: Using CPU capabilities: AVX2 AVX FMA3 SSE2
+warning: Failed to load 'en-US' text for module: '3d-effect.so'
+info: [3D Effect] loaded version 0.1.4
+warning: obs_register_source: Source '3d_effect_filter' already exists!  Duplicate library?
+warning: obs_register_source: Source 'droidcam_obs' already exists!  Duplicate library?
+info: [droidcam-obs] module loaded release 241 (pop)
+info: [Composite Blur] loaded version 1.5.1
+warning: obs_register_source: Source 'obs_composite_blur' already exists!  Duplicate library?
+info: obs-pipewire-plugin loading
+info: [obs-shaderfilter] loaded version 2.5.1
+warning: obs_register_source: Source 'shader_filter' already exists!  Duplicate library?
+warning: obs_register_source: Source 'shader_transition' already exists!  Duplicate library?
+info: ---------------------------------
+info:   Loaded Modules:
+info:     scale-to-sound.so
+info:     obs-shaderfilter.so
+info:     obs-pipewire-plugin.so
+info:     obs-composite-blur.so
+info:     droidcam-obs.so
+info:     3d-effect.so
+info:     waveform.so
+info:     vlc-video.so
+info:     text-freetype2.so
+info:     source-record.so
+info:     source-dock.so
+info:     source-clone.so
+info:     rtmp-services.so
+info:     obs-x264.so
+info:     obs-websocket.so
+info:     obs-vst.so
+info:     obs-transitions.so
+info:     obs-soundboard.so
+info:     obs-shaderfilter.so
+info:     obs-quick-access-utility.so
+info:     obs-qsv11.so
+info:     obs-ptz.so
+info:     obs-outputs.so
+info:     obs-midi-mg.so
+info:     obs-libfdk.so
+info:     obs-filters.so
+info:     obs-ffmpeg.so
+info:     obs-composite-blur.so
+info:     obs-browser.so
+info:     obs-backgroundremoval.so
+info:     move-transition.so
+info:     linux-v4l2.so
+info:     linux-pulseaudio.so
+info:     linux-pipewire.so
+info:     linux-pipewire-audio.so
+info:     linux-jack.so
+info:     linux-capture.so
+info:     linux-alsa.so
+info:     image-source.so
+info:     frontend-tools.so
+info:     droidcam-obs.so
+info:     draw-dock.so
+info:     decklink-output-ui.so
+info:     decklink-captions.so
+info:     audio-monitor.so
+info:     advanced-scene-switcher.so
+info:     3d-effect.so
+info: ---------------------------------
+info: [obs-websocket] [obs_module_post_load] WebSocket server is enabled, starting...
+info: [obs-websocket] [WebSocketServer::Start] Not locked to IPv4 bindings
+info: [obs-websocket] [WebSocketServer::ServerRunner] IO thread started.
+info: [obs-websocket] [WebSocketServer::Start] Server started successfully on port 4455. Possible connect address: 192.168.1.141
+info: ---------------------------------
+info: Available Encoders:
+info:   Video Encoders:
+info: 	- ffmpeg_svt_av1 (SVT-AV1)
+info: 	- ffmpeg_aom_av1 (AOM AV1)
+info: 	- ffmpeg_vaapi_tex (FFmpeg VAAPI H.264)
+info: 	- av1_ffmpeg_vaapi_tex (FFmpeg VAAPI AV1)
+info: 	- hevc_ffmpeg_vaapi_tex (FFmpeg VAAPI HEVC)
+info: 	- obs_qsv11_v2 (QuickSync H.264)
+info: 	- obs_qsv11_av1 (QuickSync AV1)
+info: 	- obs_qsv11_hevc (QuickSync HEVC)
+info: 	- obs_x264 (x264)
+info:   Audio Encoders:
+info: 	- ffmpeg_aac (FFmpeg AAC)
+info: 	- ffmpeg_opus (FFmpeg Opus)
+info: 	- ffmpeg_pcm_s16le (FFmpeg PCM (16-bit))
+info: 	- ffmpeg_pcm_s24le (FFmpeg PCM (24-bit))
+info: 	- ffmpeg_pcm_f32le (FFmpeg PCM (32-bit float))
+info: 	- ffmpeg_alac (FFmpeg ALAC (24-bit))
+info: 	- ffmpeg_flac (FFmpeg FLAC (16-bit))
+info: 	- libfdk_aac (libfdk AAC)
+info: ==== Startup complete ===============================================
+info: No scene file found, creating default scene
+info: All scene data cleared
+info: ------------------------------------------------
+info: Switched to scene 'Scene'
+info: [Media Source 'Soundboard']: settings:
+	input:                   
+	input_format:            (null)
+	speed:                   100
+	is_looping:              no
+	is_linear_alpha:         no
+	is_hw_decoding:          no
+	is_clear_on_media_end:   yes
+	restart_on_activate:     yes
+	close_when_inactive:     no
+	full_decode:             no
+	ffmpeg_options:          
+warning: signal_handler_connect: signal 'source_release' not found
+timeout: the monitored command dumped core
