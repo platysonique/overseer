@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OVERSEER CONTROL - Native OBS Integration</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .header {
+            background: #2d3748;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #4a5568;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .notice {
+            background: #3182ce;
+            color: white;
+            padding: 10px;
+            margin: 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .notice strong {
+            color: #ffeb3b;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .add-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #2d3748;
+            border-radius: 8px;
+            border: 1px solid #4a5568;
+        }
+
+        .add-section h3 {
+            margin: 0 0 10px 0;
+            color: #e2e8f0;
+            font-size: 16px;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .control-row select,
+        .control-row button {
+            padding: 8px 12px;
+            border: 1px solid #4a5568;
+            border-radius: 4px;
+            background: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .control-row button {
+            background: #3182ce;
+            color: white;
+            cursor: pointer;
+        }
+
+        .control-row button:hover {
+            background: #2c5282;
+        }
+
+        .path-display {
+            font-size: 12px;
+            color: #a0aec0;
+            margin-top: 8px;
+            word-break: break-all;
+        }
+
+        .data-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #2d3748;
+            border-radius: 8px;
+            border: 1px solid #4a5568;
+        }
+
+        .data-section h3 {
+            margin: 0 0 10px 0;
+            color: #e2e8f0;
+            font-size: 16px;
+        }
+
+        .data-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .data-controls input[type="file"] {
+            flex: 1;
+            min-width: 200px;
+            padding: 6px;
+            border: 1px solid #4a5568;
+            border-radius: 4px;
+            background: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .data-controls button {
+            padding: 8px 16px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .data-controls button:hover {
+            background: #2c5282;
+        }
+
+        .data-info {
+            font-size: 14px;
+            color: #a0aec0;
+        }
+
+        .overlays-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 15px;
+        }
+
+        .overlay-card {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .overlay-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #4a5568;
+        }
+
+        .overlay-title {
+            font-weight: 600;
+            color: #63b3ed;
+            font-size: 14px;
+        }
+
+        .overlay-type {
+            background: #4a5568;
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .position-selector {
+            margin-bottom: 12px;
+        }
+
+        .position-selector label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #a0aec0;
+            margin-bottom: 4px;
+        }
+
+        .position-selector select {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #4a5568;
+            border-radius: 4px;
+            background: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .controls-grid {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .control-group label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #a0aec0;
+        }
+
+        .control-group input,
+        .control-group select {
+            padding: 6px;
+            border: 1px solid #4a5568;
+            border-radius: 4px;
+            background: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .control-group input[type="color"] {
+            height: 36px;
+            cursor: pointer;
+        }
+
+        .control-group input[type="range"] {
+            cursor: pointer;
+        }
+
+        .autofill-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #a0aec0;
+            margin-bottom: 8px;
+        }
+
+        .autofill-toggle input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            flex: 1;
+            min-width: 60px;
+        }
+
+        .show-btn {
+            background: #48bb78;
+            color: white;
+        }
+
+        .hide-btn {
+            background: #f56565;
+            color: white;
+        }
+
+        .copy-path-btn {
+            background: #4299e1;
+            color: white;
+        }
+
+        .move-btn {
+            background: #ed8936;
+            color: white;
+            padding: 4px 8px;
+            min-width: 30px;
+        }
+
+        .remove-btn {
+            background: #e53e3e;
+            color: white;
+            padding: 4px 8px;
+            min-width: 30px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #48bb78;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 14px;
+            max-width: 300px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+        }
+
+        .notification.error {
+            background: #f56565;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎬 OVERSEER CONTROL</h1>
+        <div style="font-size: 12px; opacity: 0.8;">Native OBS Integration - Downstream Keyer Ready</div>
+    </div>
+
+    <div class="notice">
+        <strong>🚀 READY FOR OBS:</strong> Add this as a Custom Browser Dock in OBS View → Docks menu
+    </div>
+
+    <div class="container">
+        <div class="add-section">
+            <h3>Add Overlay</h3>
+            <div class="control-row">
+                <select id="overlay-type">
+                    <option value="logo">Logo (Sponsor Bug)</option>
+                    <option value="lower-third">Lower Third (On Air)</option>
+                    <option value="live-bug">Live Bug</option>
+                    <option value="big-lower-3rd">Big Lower Third</option>
+                    <option value="countdown">Countdown (Circles)</option>
+                </select>
+                <button id="add-overlay-btn">Add Overlay</button>
+            </div>
+            <div class="path-display">
+                <strong>OBS Browser Source Path:</strong><br>
+                <code id="current-path">file:///home/papaya/.config/obs-studio/overseer-native/overlays/[overlay-type]-output.html</code>
+            </div>
+        </div>
+
+        <div class="data-section">
+            <h3>Data Management</h3>
+            <div class="data-controls">
+                <input type="file" id="data-file" accept=".csv,.txt">
+                <button id="load-data-btn">Load Data</button>
+                <button id="clear-data-btn">Clear Data</button>
+                <button id="export-data-btn">Export Data</button>
+            </div>
+            <div class="data-info" id="data-info">No contestant data loaded</div>
+        </div>
+
+        <div class="overlays-grid" id="overlays-container">
+            <!-- Overlay control cards will be added here -->
+        </div>
+    </div>
+
+    <!-- Notification system -->
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

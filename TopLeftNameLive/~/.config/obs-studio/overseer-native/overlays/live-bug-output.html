@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Bug Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Overpass', Arial, sans-serif;
+            background: transparent;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .live-bug-container {
+            background: rgba(69, 3, 19, 0.9);
+            border-radius: 25px;
+            padding: 15px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 200px;
+        }
+
+        .top-text {
+            font-size: 35px;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .bottom-text {
+            font-size: 35px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .live-indicator {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #ff0000;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="live-bug-container">
+        <div class="top-text" id="top-text">LIVE from</div>
+        <div class="bottom-text" id="bottom-text">Location</div>
+    </div>
+
+    <script>
+        // Live Bug Overlay - Downstream Keyer
+        let config = {
+            topText: 'LIVE from',
+            bottomText: 'Location',
+            topColor: '#ffffff',
+            bottomColor: '#ffffff',
+            bgColor: '#450313'
+        };
+
+        let visible = false;
+
+        // Load saved config
+        const savedConfig = localStorage.getItem('overseer-live-bug-config');
+        if (savedConfig) {
+            try {
+                config = JSON.parse(savedConfig);
+                updateDisplay();
+            } catch (e) {
+                console.error('Failed to load config:', e);
+            }
+        }
+
+        // Check visibility
+        const savedVisibility = localStorage.getItem('overseer-live-bug-visible');
+        if (savedVisibility === 'true') {
+            visible = true;
+            document.body.style.display = 'block';
+        } else {
+            document.body.style.display = 'none';
+        }
+
+        // Listen for updates
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'overseer-live-bug-config') {
+                try {
+                    config = JSON.parse(e.newValue);
+                    updateDisplay();
+                } catch (error) {
+                    console.error('Failed to update config:', error);
+                }
+            } else if (e.key === 'overseer-live-bug-visible') {
+                visible = e.newValue === 'true';
+                document.body.style.display = visible ? 'block' : 'none';
+            }
+        });
+
+        function updateDisplay() {
+            const topElement = document.getElementById('top-text');
+            const bottomElement = document.getElementById('bottom-text');
+            const container = document.querySelector('.live-bug-container');
+
+            topElement.textContent = config.topText || 'LIVE from';
+            bottomElement.textContent = config.bottomText || 'Location';
+
+            topElement.style.color = config.topColor || '#ffffff';
+            bottomElement.style.color = config.bottomColor || '#ffffff';
+
+            if (container) {
+                const bgColor = config.bgColor || '#450313';
+                container.style.background = bgColor + 'e6';
+            }
+        }
+
+        // Initial display update
+        updateDisplay();
+
+        console.log('Live bug overlay loaded - Downstream Keyer ready');
+    </script>
+</body>
+</html>
+
+
+

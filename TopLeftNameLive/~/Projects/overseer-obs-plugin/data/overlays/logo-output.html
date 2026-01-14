@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: transparent;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .logo-container {
+            background: rgba(69, 3, 19, 0.9);
+            border-radius: 10px;
+            padding: 15px 25px;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <div class="logo-text" id="logo-text">SPONSOR</div>
+    </div>
+
+    <script>
+        // Overseer Logo Overlay
+        // This will be controlled by the plugin through browser source parameters
+
+        // Default values
+        let overlayData = {
+            text: 'SPONSOR',
+            color: '#ffffff',
+            bgColor: '#450313',
+            fontSize: '24px'
+        };
+
+        // Function to update overlay from plugin data
+        function updateOverlay(data) {
+            if (data.text !== undefined) {
+                document.getElementById('logo-text').textContent = data.text;
+            }
+            if (data.color !== undefined) {
+                document.getElementById('logo-text').style.color = data.color;
+            }
+            if (data.bgColor !== undefined) {
+                document.querySelector('.logo-container').style.background = data.bgColor + 'e6'; // Add transparency
+            }
+            if (data.fontSize !== undefined) {
+                document.getElementById('logo-text').style.fontSize = data.fontSize + 'px';
+            }
+        }
+
+        // Listen for messages from the plugin (if implemented)
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'updateOverlay') {
+                updateOverlay(event.data.data);
+            }
+        });
+
+        // Apply initial data
+        updateOverlay(overlayData);
+    </script>
+</body>
+</html>
+
+
+

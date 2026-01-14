@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Overseer Control
+Comment=Native OBS Overlay Control Interface - Downstream Keyer Ready
+Exec=xdg-open ~/.config/obs-studio/overseer-native/control/index.html
+Icon=pombomb-obs
+Terminal=false
+Type=Application
+Categories=AudioVideo;Recorder;
+StartupNotify=true
+StartupWMClass=chromium
+
+Comment[en]=Professional overlay control for OBS beauty pageants
+GenericName[en]=OBS Overlay Control

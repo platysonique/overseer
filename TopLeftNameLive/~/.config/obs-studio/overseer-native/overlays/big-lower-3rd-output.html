@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Lower Third Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Overpass', Arial, sans-serif;
+            background: transparent;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .big-lower-third-container {
+            background: linear-gradient(135deg, rgba(69, 3, 19, 0.9), rgba(255, 0, 53, 0.9));
+            border-radius: 15px;
+            padding: 25px 40px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+        }
+
+        .subtitle {
+            font-size: 55px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="big-lower-third-container">
+        <div class="title" id="title-text">Follow us</div>
+        <div class="subtitle" id="subtitle-text">Like and Subscribe!</div>
+    </div>
+
+    <script>
+        // Big Lower Third Overlay - Downstream Keyer
+        let config = {
+            title: 'Follow us',
+            subtitle: 'Like and Subscribe!',
+            titleColor: '#ffffff',
+            subtitleColor: '#ffffff',
+            bgColor1: '#450313',
+            bgColor2: '#ff0035'
+        };
+
+        let visible = false;
+
+        // Load saved config
+        const savedConfig = localStorage.getItem('overseer-big-lower-3rd-config');
+        if (savedConfig) {
+            try {
+                config = JSON.parse(savedConfig);
+                updateDisplay();
+            } catch (e) {
+                console.error('Failed to load config:', e);
+            }
+        }
+
+        // Check visibility
+        const savedVisibility = localStorage.getItem('overseer-big-lower-3rd-visible');
+        if (savedVisibility === 'true') {
+            visible = true;
+            document.body.style.display = 'block';
+        } else {
+            document.body.style.display = 'none';
+        }
+
+        // Listen for updates
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'overseer-big-lower-3rd-config') {
+                try {
+                    config = JSON.parse(e.newValue);
+                    updateDisplay();
+                } catch (error) {
+                    console.error('Failed to update config:', error);
+                }
+            } else if (e.key === 'overseer-big-lower-3rd-visible') {
+                visible = e.newValue === 'true';
+                document.body.style.display = visible ? 'block' : 'none';
+            }
+        });
+
+        function updateDisplay() {
+            const titleElement = document.getElementById('title-text');
+            const subtitleElement = document.getElementById('subtitle-text');
+            const container = document.querySelector('.big-lower-third-container');
+
+            titleElement.textContent = config.title || 'Follow us';
+            subtitleElement.textContent = config.subtitle || 'Like and Subscribe!';
+
+            titleElement.style.color = config.titleColor || '#ffffff';
+            subtitleElement.style.color = config.subtitleColor || '#ffffff';
+
+            if (container) {
+                const bgColor1 = config.bgColor1 || '#450313';
+                const bgColor2 = config.bgColor2 || '#ff0035';
+                container.style.background = `linear-gradient(135deg, ${bgColor1}e6, ${bgColor2}e6)`;
+            }
+        }
+
+        // Initial display update
+        updateDisplay();
+
+        console.log('Big lower third overlay loaded - Downstream Keyer ready');
+    </script>
+</body>
+</html>
+
+
+

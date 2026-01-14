@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lower Third Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: transparent;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .lower-third-container {
+            background: rgba(69, 3, 19, 0.9);
+            border-radius: 10px;
+            padding: 20px 30px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .subtitle {
+            font-size: 24px;
+            margin: 0;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="lower-third-container">
+        <div class="title" id="title-text">Name, Age</div>
+        <div class="subtitle" id="subtitle-text">State</div>
+    </div>
+
+    <script>
+        // Overseer Lower Third Overlay
+        let overlayData = {
+            title: 'Name, Age',
+            subtitle: 'State',
+            titleColor: '#ffffff',
+            subtitleColor: '#ffffff',
+            bgColor: '#450313'
+        };
+
+        function updateOverlay(data) {
+            if (data.title !== undefined) {
+                document.getElementById('title-text').textContent = data.title;
+            }
+            if (data.subtitle !== undefined) {
+                document.getElementById('subtitle-text').textContent = data.subtitle;
+            }
+            if (data.titleColor !== undefined) {
+                document.getElementById('title-text').style.color = data.titleColor;
+            }
+            if (data.subtitleColor !== undefined) {
+                document.getElementById('subtitle-text').style.color = data.subtitleColor;
+            }
+            if (data.bgColor !== undefined) {
+                document.querySelector('.lower-third-container').style.background = data.bgColor + 'e6';
+            }
+        }
+
+        // Listen for messages from the plugin
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'updateOverlay') {
+                updateOverlay(event.data.data);
+            }
+        });
+
+        // Apply initial data
+        updateOverlay(overlayData);
+    </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Bug Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Overpass', Arial, sans-serif;
+            background: transparent;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .live-bug-container {
+            background: rgba(69, 3, 19, 0.9);
+            border-radius: 25px;
+            padding: 15px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 200px;
+        }
+
+        .top-text {
+            font-size: 35px;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .bottom-text {
+            font-size: 35px;
+            font-weight: bold;
+            margin: 0;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .live-indicator {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #ff0000;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="live-bug-container">
+        <div class="top-text" id="top-text">LIVE from</div>
+        <div class="bottom-text" id="bottom-text">Location</div>
+    </div>
+
+    <script>
+        // Overseer Live Bug Overlay
+        let overlayData = {
+            topText: 'LIVE from',
+            bottomText: 'Location',
+            topColor: '#ffffff',
+            bottomColor: '#ffffff',
+            bgColor: '#450313'
+        };
+
+        function updateOverlay(data) {
+            if (data.topText !== undefined) {
+                document.getElementById('top-text').textContent = data.topText;
+            }
+            if (data.bottomText !== undefined) {
+                document.getElementById('bottom-text').textContent = data.bottomText;
+            }
+            if (data.topColor !== undefined) {
+                document.getElementById('top-text').style.color = data.topColor;
+            }
+            if (data.bottomColor !== undefined) {
+                document.getElementById('bottom-text').style.color = data.bottomColor;
+            }
+            if (data.bgColor !== undefined) {
+                document.querySelector('.live-bug-container').style.background = data.bgColor + 'e6';
+            }
+        }
+
+        // Listen for messages from the plugin
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'updateOverlay') {
+                updateOverlay(event.data.data);
+            }
+        });
+
+        // Apply initial data
+        updateOverlay(overlayData);
+    </script>
+</body>
+</html>
+
+
+

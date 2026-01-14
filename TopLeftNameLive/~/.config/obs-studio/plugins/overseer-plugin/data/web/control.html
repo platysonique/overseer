@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overseer Control Panel</title>
+    <link rel="stylesheet" href="assets/css/control.css">
+</head>
+<body>
+    <div class="overseer-control">
+        <div class="header">
+            <h1>OVERSEER PLUGIN</h1>
+            <div class="status">
+                <span id="connection-status">Connecting...</span>
+                <span id="data-status">No data loaded</span>
+            </div>
+        </div>
+
+        <div class="add-overlay-section">
+            <h2>Add Overlay</h2>
+            <select id="overlay-type">
+                <option value="logo">Logo (Sponsor Bug)</option>
+                <option value="lower-third">Lower Third (On Air)</option>
+                <option value="live-bug">Live Bug</option>
+                <option value="big-lower-3rd">Big Lower Third</option>
+                <option value="countdown">Countdown (Circles)</option>
+            </select>
+            <button id="add-overlay-btn">Add Overlay</button>
+        </div>
+
+        <div class="data-management">
+            <h2>Data Management</h2>
+            <div class="data-controls">
+                <input type="file" id="data-file" accept=".csv,.txt">
+                <button id="load-data-btn">Load Contestant Data</button>
+                <button id="clear-data-btn">Clear Data</button>
+            </div>
+            <div class="data-info">
+                <span id="contestant-count">0 contestants loaded</span>
+            </div>
+        </div>
+
+        <div class="overlays-container" id="overlays-container">
+            <!-- Overlay control panels will be added here -->
+        </div>
+    </div>
+
+    <script src="assets/js/control.js"></script>
+</body>
+</html>

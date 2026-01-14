@@ -1,0 +1,9 @@
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/overseer-plugin.dir
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/edit_cache.dir
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/rebuild_cache.dir
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/list_install_components.dir
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/install.dir
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/install/local.dir
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/install/strip.dir
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/overseer-plugin_autogen_timestamp_deps.dir
+/home/papaya/Downloads/Overlays/TopLeftNameLive/~/Projects/overseer-obs-plugin-final/build/CMakeFiles/overseer-plugin_autogen.dir

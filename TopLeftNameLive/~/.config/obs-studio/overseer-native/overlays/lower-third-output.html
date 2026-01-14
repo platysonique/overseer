@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lower Third Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: transparent;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .lower-third-container {
+            background: rgba(69, 3, 19, 0.9);
+            border-radius: 10px;
+            padding: 20px 30px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .subtitle {
+            font-size: 24px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="lower-third-container">
+        <div class="title" id="title-text">Name, Age</div>
+        <div class="subtitle" id="subtitle-text">State</div>
+    </div>
+
+    <script>
+        // Lower Third Overlay - Downstream Keyer
+        let config = {
+            title: 'Name, Age',
+            subtitle: 'State',
+            titleColor: '#ffffff',
+            subtitleColor: '#ffffff',
+            bgColor: '#450313'
+        };
+
+        let visible = false;
+
+        // Load saved config
+        const savedConfig = localStorage.getItem('overseer-lower-third-config');
+        if (savedConfig) {
+            try {
+                config = JSON.parse(savedConfig);
+                updateDisplay();
+            } catch (e) {
+                console.error('Failed to load config:', e);
+            }
+        }
+
+        // Check visibility
+        const savedVisibility = localStorage.getItem('overseer-lower-third-visible');
+        if (savedVisibility === 'true') {
+            visible = true;
+            document.body.style.display = 'block';
+        } else {
+            document.body.style.display = 'none';
+        }
+
+        // Listen for updates
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'overseer-lower-third-config') {
+                try {
+                    config = JSON.parse(e.newValue);
+                    updateDisplay();
+                } catch (error) {
+                    console.error('Failed to update config:', error);
+                }
+            } else if (e.key === 'overseer-lower-third-visible') {
+                visible = e.newValue === 'true';
+                document.body.style.display = visible ? 'block' : 'none';
+            }
+        });
+
+        function updateDisplay() {
+            const titleElement = document.getElementById('title-text');
+            const subtitleElement = document.getElementById('subtitle-text');
+            const container = document.querySelector('.lower-third-container');
+
+            titleElement.textContent = config.title || 'Name, Age';
+            subtitleElement.textContent = config.subtitle || 'State';
+
+            titleElement.style.color = config.titleColor || '#ffffff';
+            subtitleElement.style.color = config.subtitleColor || '#ffffff';
+
+            if (container) {
+                const bgColor = config.bgColor || '#450313';
+                container.style.background = bgColor + 'e6';
+            }
+        }
+
+        // Initial display update
+        updateDisplay();
+
+        console.log('Lower third overlay loaded - Downstream Keyer ready');
+    </script>
+</body>
+</html>
+
+
+

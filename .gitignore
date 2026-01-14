@@ -19,7 +19,9 @@ moc_*.o
 .idea/
 *.swp
 *.swo
+# Ignore files ending with ~ but allow directories named ~
 *~
+!~/
 
 # System files
 .DS_Store

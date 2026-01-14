@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: transparent;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            position: absolute;
+        }
+
+        .logo-container {
+            background: rgba(69, 3, 19, 0.9);
+            border-radius: 10px;
+            padding: 15px 25px;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <div class="logo-text" id="logo-text">SPONSOR</div>
+    </div>
+
+    <script>
+        // Logo Overlay - Downstream Keyer
+        let config = {
+            text: 'SPONSOR',
+            color: '#ffffff',
+            bgColor: '#450313',
+            fontSize: 24
+        };
+
+        let visible = false;
+
+        // Load saved config from localStorage
+        const savedConfig = localStorage.getItem('overseer-logo-config');
+        if (savedConfig) {
+            try {
+                config = JSON.parse(savedConfig);
+                updateDisplay();
+            } catch (e) {
+                console.error('Failed to load config:', e);
+            }
+        }
+
+        // Check visibility from localStorage
+        const savedVisibility = localStorage.getItem('overseer-logo-visible');
+        if (savedVisibility === 'true') {
+            visible = true;
+            document.body.style.display = 'block';
+        } else {
+            document.body.style.display = 'none';
+        }
+
+        // Listen for config updates
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'overseer-logo-config') {
+                try {
+                    config = JSON.parse(e.newValue);
+                    updateDisplay();
+                } catch (error) {
+                    console.error('Failed to update config:', error);
+                }
+            } else if (e.key === 'overseer-logo-visible') {
+                visible = e.newValue === 'true';
+                document.body.style.display = visible ? 'block' : 'none';
+            }
+        });
+
+        function updateDisplay() {
+            const textElement = document.getElementById('logo-text');
+            const container = document.querySelector('.logo-container');
+
+            textElement.textContent = config.text || 'SPONSOR';
+            textElement.style.color = config.color || '#ffffff';
+            textElement.style.fontSize = (config.fontSize || 24) + 'px';
+
+            if (container) {
+                const bgColor = config.bgColor || '#450313';
+                container.style.background = bgColor + 'e6'; // Add transparency
+            }
+        }
+
+        // Initial display update
+        updateDisplay();
+
+        console.log('Logo overlay loaded - Downstream Keyer ready');
+    </script>
+</body>
+</html>
+
+
+

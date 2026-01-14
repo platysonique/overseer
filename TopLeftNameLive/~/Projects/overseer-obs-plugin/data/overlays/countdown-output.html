@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .countdown-container {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 8px solid #ffffff;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+        }
+
+        .countdown-text {
+            font-size: 357px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.8);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            position: absolute;
+            bottom: 20px;
+            font-size: 24px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <div class="countdown-text" id="countdown-text">5:00</div>
+    </div>
+    <div class="countdown-label">COUNTDOWN</div>
+
+    <script>
+        // Overseer Countdown Overlay
+        let overlayData = {
+            time: '5:00:00',
+            color: '#ffffff',
+            fontSize: '357',
+            bgColor: 'transparent'
+        };
+
+        let countdownInterval;
+        let endTime;
+
+        function parseTime(timeString) {
+            // Parse HH:MM:SS format
+            const parts = timeString.split(':');
+            if (parts.length === 3) {
+                const hours = parseInt(parts[0]) || 0;
+                const minutes = parseInt(parts[1]) || 0;
+                const seconds = parseInt(parts[2]) || 0;
+                return (hours * 3600 + minutes * 60 + seconds) * 1000; // Convert to milliseconds
+            }
+            return 0;
+        }
+
+        function formatTime(milliseconds) {
+            const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            if (hours > 0) {
+                return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        function startCountdown() {
+            const totalTime = parseTime(overlayData.time);
+            endTime = Date.now() + totalTime;
+
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+
+            countdownInterval = setInterval(() => {
+                const remaining = endTime - Date.now();
+                if (remaining <= 0) {
+                    document.getElementById('countdown-text').textContent = '0:00';
+                    clearInterval(countdownInterval);
+                } else {
+                    document.getElementById('countdown-text').textContent = formatTime(remaining);
+                }
+            }, 100); // Update 10 times per second for smooth countdown
+        }
+
+        function updateOverlay(data) {
+            if (data.time !== undefined) {
+                overlayData.time = data.time;
+                startCountdown(); // Restart countdown with new time
+            }
+            if (data.color !== undefined) {
+                document.getElementById('countdown-text').style.color = data.color;
+                document.querySelector('.countdown-container').style.borderColor = data.color;
+            }
+            if (data.fontSize !== undefined) {
+                document.getElementById('countdown-text').style.fontSize = data.fontSize + 'px';
+            }
+            if (data.bgColor !== undefined) {
+                if (data.bgColor === 'transparent') {
+                    document.querySelector('.countdown-container').style.background = 'rgba(0, 0, 0, 0.7)';
+                } else {
+                    document.querySelector('.countdown-container').style.background = data.bgColor + 'b3'; // Semi-transparent
+                }
+            }
+        }
+
+        // Listen for messages from the plugin
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'updateOverlay') {
+                updateOverlay(event.data.data);
+            }
+        });
+
+        // Apply initial data and start countdown
+        updateOverlay(overlayData);
+    </script>
+</body>
+</html>
+
+
+

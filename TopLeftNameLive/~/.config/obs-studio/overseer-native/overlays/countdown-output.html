@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .countdown-container {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 8px solid #ffffff;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+        }
+
+        .countdown-text {
+            font-size: 357px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.8);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            position: absolute;
+            bottom: 20px;
+            font-size: 24px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <div class="countdown-text" id="countdown-text">5:00</div>
+    </div>
+    <div class="countdown-label">COUNTDOWN</div>
+
+    <script>
+        // Countdown Overlay - Downstream Keyer
+        let config = {
+            time: '5:00:00',
+            color: '#ffffff',
+            fontSize: 357
+        };
+
+        let visible = false;
+        let countdownInterval;
+        let endTime;
+
+        // Load saved config
+        const savedConfig = localStorage.getItem('overseer-countdown-config');
+        if (savedConfig) {
+            try {
+                config = JSON.parse(savedConfig);
+                updateDisplay();
+            } catch (e) {
+                console.error('Failed to load config:', e);
+            }
+        }
+
+        // Check visibility
+        const savedVisibility = localStorage.getItem('overseer-countdown-visible');
+        if (savedVisibility === 'true') {
+            visible = true;
+            document.body.style.display = 'block';
+        } else {
+            document.body.style.display = 'none';
+        }
+
+        // Listen for updates
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'overseer-countdown-config') {
+                try {
+                    config = JSON.parse(e.newValue);
+                    updateDisplay();
+                } catch (error) {
+                    console.error('Failed to update config:', error);
+                }
+            } else if (e.key === 'overseer-countdown-visible') {
+                visible = e.newValue === 'true';
+                document.body.style.display = visible ? 'block' : 'none';
+            }
+        });
+
+        function parseTime(timeString) {
+            const parts = timeString.split(':');
+            if (parts.length === 3) {
+                const hours = parseInt(parts[0]) || 0;
+                const minutes = parseInt(parts[1]) || 0;
+                const seconds = parseInt(parts[2]) || 0;
+                return (hours * 3600 + minutes * 60 + seconds) * 1000;
+            }
+            return 0;
+        }
+
+        function formatTime(milliseconds) {
+            const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            if (hours > 0) {
+                return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        function startCountdown() {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+
+            const totalTime = parseTime(config.time || '5:00:00');
+            endTime = Date.now() + totalTime;
+
+            countdownInterval = setInterval(() => {
+                const remaining = endTime - Date.now();
+                if (remaining <= 0) {
+                    document.getElementById('countdown-text').textContent = '0:00';
+                    clearInterval(countdownInterval);
+                } else {
+                    document.getElementById('countdown-text').textContent = formatTime(remaining);
+                }
+            }, 100);
+        }
+
+        function updateDisplay() {
+            const textElement = document.getElementById('countdown-text');
+
+            textElement.style.color = config.color || '#ffffff';
+            textElement.style.fontSize = (config.fontSize || 357) + 'px';
+
+            startCountdown();
+        }
+
+        // Initial display update
+        updateDisplay();
+
+        console.log('Countdown overlay loaded - Downstream Keyer ready');
+    </script>
+</body>
+</html>
+
+
+
