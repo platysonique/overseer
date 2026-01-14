@@ -1,0 +1,36 @@
+# Build artifacts
+build/
+*.so
+*.o
+*.a
+*.d
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+*.moc
+moc_*.cpp
+moc_*.o
+*.pro.user
+*.qmake.stash
+*.autosave
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+obs_output.log
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+

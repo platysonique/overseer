@@ -1,0 +1,291 @@
+=== DBRM ANALYSIS: OBS OVERLAY VISIBILITY FAILURE ===
+Date: Mon Jan 12 03:50:59 PM CST 2026
+
+=== TASK 1: REAL ARCHITECTURE RECONSTRUCTION ===
+
+PLUGIN ENTRY POINTS:
+- File: src/overseer-plugin.cpp:27
+- Code: OBS_DECLARE_MODULE()
+- Function: obs_module_load() [lines 900-924]
+- Function: obs_module_unload() [lines 926-931]
+
+QT DOCK CREATION:
+- File: src/overseer-plugin.cpp:918
+- Code: dock = new OverseerDock(mainWindow);
+- Function: OverseerDock(QWidget* parent) [lines 58-62]
+- Setup: setupUI() [line 60], loadSettings() [line 61]
+
+OBS SOURCE CREATION PATH:
+1. User clicks "Add Overlay" → onAddOverlayClicked() [lines 69-72]
+2. Calls addOverlay(type) [line 71]
+3. addOverlay() creates OverlayInstance [lines 221-253]
+4. Creates control widget [lines 254-255] 
+5. Calls createBrowserSource(instance) [line 257]
+
+BROWSER SOURCE CREATION:
+- File: src/overseer-plugin.cpp:651-718
+- Code: obs_source_create("browser_source", instance.id.toUtf8().constData(), nullptr, nullptr)
+- Settings: obs_data_set_string(settings, "url", file_url)
+- Settings: obs_data_set_int(settings, "width", 1920)
+- Settings: obs_data_set_int(settings, "height", 1080)
+
+SCENE ATTACHMENT (ON SHOW):
+1. User clicks SHOW → onShowClicked() → toggleVisibility(id, true) [lines 85-87]
+2. toggleVisibility() calls ensureSourceInScene(overlay) [line 298]
+3. ensureSourceInScene() gets current scene [lines 829-830]
+4. Checks if source already in scene [lines 837-844]
+5. If not, adds via obs_scene_add(scene, source) [line 848]
+
+VISIBILITY CONTROL:
+- File: src/overseer-plugin.cpp:788
+- Code: obs_source_set_enabled(source, instance.visible)
+
+POSITIONING:
+- File: src/overseer-plugin.cpp:796-810
+- Gets scene item: obs_sceneitem_t* item = obs_scene_sceneitem_from_source(scene, source)
+- Sets position: obs_sceneitem_set_pos(item, &pos) [line 805]
+
+=== TASK 2: FAILURE BREAK POINTS ===
+
+A) PLUGIN LOAD / DOCK CREATION
+- Entry: obs_module_load() [src/overseer-plugin.cpp:900-924]
+- Early return: if (!mainWindow) return false; [line 903-906]
+- Dock creation: dock = new OverseerDock(mainWindow); [line 918]
+- Dock addition: obs_frontend_add_dock(dock); [line 919]
+- FAILURE: If mainWindow is null, dock never created
+
+B) BROWSER SOURCE CREATION  
+- Function: createBrowserSource() [src/overseer-plugin.cpp:651-718]
+- Creation: obs_source_create("browser_source", id, nullptr, nullptr) [line 657]
+- Null check: if (!source) return; [lines 658-661]
+- HTML path: getOverlayHtmlPath(instance.type) [line 667]
+- File check: if (!QFile::exists(htmlPath)) return; [lines 670-677]
+- FAILURE: Source creation fails silently if browser_source unavailable
+
+C) SCENE RESOLUTION & ATTACHMENT
+- Scene get: obs_frontend_get_current_scene() [line 829]
+- Scene convert: obs_scene_get_source(scene_source) [line 829]  
+- Scene check: if (!scene) return; [lines 830-833]
+- Scene add: obs_scene_add(scene, source) [line 848]
+- FAILURE: If no current scene exists, sources never added
+
+D) VISIBILITY / TRANSFORM / SIZE
+- Visibility: obs_source_set_enabled(source, visible) [line 788]
+- Position check: obs_sceneitem_set_pos(item, &pos) [line 805]
+- Position values: UP_LEFT (50,50), UP_RIGHT (1520,50), etc.
+- FAILURE: If position off-screen or visibility not set
+
+E) BROWSER SETTINGS & URL
+- Settings get: obs_data_t* settings = obs_source_get_settings(source) [line 666]
+- URL set: obs_data_set_string(settings, "url", file_url) [line 682]
+- Size set: width/height = 1920x1080 [lines 683-684]
+- FAILURE: If HTML file doesn't exist, early return [lines 670-677]
+
+=== TASK 3: MINIMAL HIGH-SIGNAL LOGGING ===
+
+Add this include:
+File: src/overseer-plugin.cpp:25 (after Qt includes)
+ADD: #include <util/base.h>
+
+1) PLUGIN LOAD:
+File: src/overseer-plugin.cpp:900 (obs_module_load start)
+ADD: blog(LOG_INFO, "[OVERSEER] Plugin loaded, getting main window");
+
+2) DOCK CREATION:  
+File: src/overseer-plugin.cpp:918 (after dock creation)
+ADD: blog(LOG_INFO, "[OVERSEER] Dock created and added to OBS UI");
+
+3) ADD OVERLAY TRIGGER:
+File: src/overseer-plugin.cpp:69 (onAddOverlayClicked start)
+ADD: blog(LOG_INFO, "[OVERSEER] Add overlay triggered, type: %d", (int)type);
+
+4) SOURCE CREATION:
+File: src/overseer-plugin.cpp:662 (after success)
+ADD: blog(LOG_INFO, "[OVERSEER] Browser source created: %s", instance.id.toUtf8().constData());
+File: src/overseer-plugin.cpp:658 (after null check)
+ADD: blog(LOG_ERROR, "[OVERSEER] Browser source creation FAILED");
+
+5) SCENE RESOLUTION:
+File: src/overseer-plugin.cpp:829 (after scene get)
+ADD: blog(LOG_INFO, "[OVERSEER] Current scene resolved: %s", scene ? "VALID" : "NULL");
+
+6) SCENE ADDITION:
+File: src/overseer-plugin.cpp:848 (after obs_scene_add)
+ADD: blog(LOG_INFO, "[OVERSEER] Source added to scene successfully");
+
+7) VISIBILITY SET:
+File: src/overseer-plugin.cpp:788 (after obs_source_set_enabled)
+ADD: blog(LOG_INFO, "[OVERSEER] Source visibility set to: %s", visible ? "VISIBLE" : "HIDDEN");
+
+=== TASK 4: EXECUTION PLAN ===
+
+1) EDITS TO MAKE:
+   - Add #include <util/base.h> to src/overseer-plugin.cpp
+   - Add 7 blog() calls at specified line locations above
+
+2) REBUILD:
+   make clean && qmake && make
+   cp liboverseer-plugin.so ~/.config/obs-studio/plugins/overseer-plugin/bin/64bit/
+
+3) LOG LOCATION:
+   OBS log file (Help → Log Files → Show Log Files)
+
+4) HAPPY PATH LOGS:
+   [OVERSEER] Plugin loaded, getting main window
+   [OVERSEER] Dock created and added to OBS UI
+   [OVERSEER] Add overlay triggered, type: 0
+   [OVERSEER] Browser source created: {uuid}
+   [OVERSEER] Current scene resolved: VALID
+   [OVERSEER] Source added to scene successfully
+   [OVERSEER] Source visibility set to: VISIBLE
+
+5) FAILURE DIAGNOSIS:
+   - Missing "[OVERSEER] Plugin loaded": Plugin not loading
+   - Missing "[OVERSEER] Dock created": Dock creation failed  
+   - Missing "[OVERSEER] Browser source created": Source creation failed
+   - Missing "[OVERSEER] Current scene resolved: VALID": Scene access failed
+   - Missing "[OVERSEER] Source added to scene": Scene attachment failed
+   - Has creation but no scene addition: Timing issue (scene not ready)
+   - Has scene addition but no visibility: Transform/position issue
+
+
+=== CONCRETE CODE CHANGES ===
+
+File: src/overseer-plugin.cpp
+
+CHANGE 1 - Add OBS logging include:
+LOCATION: Line 25 (after Qt includes)
+BEFORE:
+#include <QtCore/QUuid>
+
+OBS_DECLARE_MODULE()
+AFTER:
+#include <QtCore/QUuid>
+#include <util/base.h>
+
+OBS_DECLARE_MODULE()
+
+CHANGE 2 - Plugin load logging:
+LOCATION: Line 900 (obs_module_load start)
+BEFORE:
+bool obs_module_load(void) {
+    qDebug() << "=== OBS MODULE LOAD START ===";
+AFTER:
+bool obs_module_load(void) {
+    blog(LOG_INFO, "[OVERSEER] Plugin loaded, getting main window");
+    qDebug() << "=== OBS MODULE LOAD START ===";
+
+CHANGE 3 - Dock creation logging:
+LOCATION: Line 918 (after dock creation)
+BEFORE:
+    dock = new OverseerDock(mainWindow);
+    obs_frontend_add_dock(dock);
+    qDebug() << "SUCCESS: Dock created and added";
+AFTER:
+    dock = new OverseerDock(mainWindow);
+    obs_frontend_add_dock(dock);
+    blog(LOG_INFO, "[OVERSEER] Dock created and added to OBS UI");
+    qDebug() << "SUCCESS: Dock created and added";
+
+CHANGE 4 - Add overlay trigger logging:
+LOCATION: Line 69 (onAddOverlayClicked start)
+BEFORE:
+    void onAddOverlayClicked() {
+        OverlayType type = (OverlayType)overlayTypeSelect_->currentData().toInt();
+AFTER:
+    void onAddOverlayClicked() {
+        OverlayType type = (OverlayType)overlayTypeSelect_->currentData().toInt();
+        blog(LOG_INFO, "[OVERSEER] Add overlay triggered, type: %d", (int)type);
+
+CHANGE 5 - Source creation logging:
+LOCATION: Lines 658-662 (after obs_source_create)
+BEFORE:
+    obs_source_t* source = obs_source_create("browser_source", instance.id.toUtf8().constData(), nullptr, nullptr);
+    if (!source) {
+        qWarning() << "FAILED: obs_source_create returned null for overlay:" << instance.id;
+        return;
+    }
+    qDebug() << "SUCCESS: Browser source created";
+AFTER:
+    obs_source_t* source = obs_source_create("browser_source", instance.id.toUtf8().constData(), nullptr, nullptr);
+    if (!source) {
+        blog(LOG_ERROR, "[OVERSEER] Browser source creation FAILED");
+        qWarning() << "FAILED: obs_source_create returned null for overlay:" << instance.id;
+        return;
+    }
+    blog(LOG_INFO, "[OVERSEER] Browser source created: %s", instance.id.toUtf8().constData());
+    qDebug() << "SUCCESS: Browser source created";
+
+CHANGE 6 - Scene resolution logging:
+LOCATION: Line 829 (after obs_scene_get_source)
+BEFORE:
+    obs_scene_t* scene = obs_scene_get_source(obs_frontend_get_current_scene());
+    if (!scene) {
+AFTER:
+    obs_scene_t* scene = obs_scene_get_source(obs_frontend_get_current_scene());
+    blog(LOG_INFO, "[OVERSEER] Current scene resolved: %s", scene ? "VALID" : "NULL");
+    if (!scene) {
+
+CHANGE 7 - Scene addition logging:
+LOCATION: Line 848 (after obs_scene_add)
+BEFORE:
+    // Add source to scene
+    qDebug() << "Adding source to scene...";
+    obs_scene_add(scene, source);
+    qDebug() << "SUCCESS: Source added to scene";
+AFTER:
+    // Add source to scene
+    qDebug() << "Adding source to scene...";
+    obs_scene_add(scene, source);
+    blog(LOG_INFO, "[OVERSEER] Source added to scene successfully");
+    qDebug() << "SUCCESS: Source added to scene";
+
+CHANGE 8 - Visibility logging:
+LOCATION: Line 788 (after obs_source_set_enabled)
+BEFORE:
+    // Update visibility
+    qDebug() << "Setting visibility to:" << instance.visible;
+    obs_source_set_enabled(source, instance.visible);
+AFTER:
+    // Update visibility
+    qDebug() << "Setting visibility to:" << instance.visible;
+    obs_source_set_enabled(source, instance.visible);
+    blog(LOG_INFO, "[OVERSEER] Source visibility set to: %s", instance.visible ? "VISIBLE" : "HIDDEN");
+
+
+=== FINAL EXECUTION PLAN ===
+
+1. Apply the 8 code changes above to src/overseer-plugin.cpp
+
+2. Rebuild plugin:
+   cd ~/Projects/overseer-obs-plugin
+   make clean && qmake && make
+
+3. Install plugin:
+   cp liboverseer-plugin.so ~/.config/obs-studio/plugins/overseer-plugin/bin/64bit/
+
+4. Launch OBS and check logs at: Help → Log Files → Show Log Files
+
+5. Expected happy path logs:
+   [OVERSEER] Plugin loaded, getting main window
+   [OVERSEER] Dock created and added to OBS UI  
+   [OVERSEER] Add overlay triggered, type: 0
+   [OVERSEER] Browser source created: {uuid}
+   [OVERSEER] Current scene resolved: VALID
+   [OVERSEER] Source added to scene successfully
+   [OVERSEER] Source visibility set to: VISIBLE
+
+6. If overlay not visible, identify break point:
+   - Logs stop at plugin load → Qt/main window issue
+   - Logs stop at dock creation → Frontend dock registration failed  
+   - Logs stop at add overlay → UI interaction not working
+   - Logs stop at browser source → obs_source_create failing
+   - Logs show "Current scene resolved: NULL" → Scene timing issue
+   - All logs present but invisible → Position/transform issue
+
+7. Most likely failure: Scene timing (sources created before scene exists)
+   - Evidence: ensureSourceInScene() only called on SHOW click
+   - Fix: Call ensureSourceInScene() immediately after createBrowserSource()
+
+PRIMARY HYPOTHESIS: Scene attachment happens too late in the pipeline.
+

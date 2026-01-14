@@ -1,0 +1,99 @@
+COPY THIS DIRECTLY INTO CURSOR AND PASTE THE RESULT BACK
+
+================================
+COMPLETE OVERSEER IMPLEMENTATION
+================================
+
+Use this protocol with Cursor:
+
+TASK: Build the complete Overseer OBS plugin exactly as specified in cursor_build_prompt.md
+
+DELIVERABLES:
+1. All 12 source files (.h and .cpp) - COMPLETE and COMPILABLE
+2. CMakeLists.txt - PRODUCTION READY
+3. No TODOs, no placeholders, no guessing
+4. All code production-grade (memory safe, error handled)
+
+ARCHITECTURE: Nested scenes (NOT groups) - logo LEFT x:0-200, text RIGHT x:220-1280
+
+FILES TO CREATE:
+
+src/overseer-types.h
+  - OverlayType enum (5 types)
+  - IngestedDataRow struct
+  - OverlayParameters base class
+  - LowerThirdParameters (logo+text params)
+  - LogoParameters
+  - LiveBugParameters  
+  - BigLower3rdParameters
+  - CountdownParameters
+
+src/overseer-nested-scene.h
+src/overseer-nested-scene.cpp
+  - OverseerNestedScene class
+  - createNestedScene() - creates fixed-bounds OBS nested scene
+  - addSourceToNested() - adds child sources at x,y with width,height
+  - setMainCanvasPosition(x,y) - moves entire overlay in main canvas
+  - setMainCanvasScale(scale) - scales entire overlay
+  - updateSourceProperty() - updates text, colors, files
+
+src/overseer-overlay.h
+src/overseer-overlay.cpp
+  - OverseerOverlay class wraps OverseerNestedScene
+  - createOBSSource() dispatcher to type-specific creation
+  - createLowerThirdNested() - Logo LEFT + Text RIGHT layout
+  - createLogoNested() - Logo centered
+  - createLiveBugNested() - Red LIVE indicator
+  - createBigLower3rdNested() - Title + subtitle
+  - createCountdownNested() - Timer display
+  - All parameters accessible
+  - Position/scale control methods
+
+src/overseer-data.h
+src/overseer-data.cpp
+  - DataIngestor class
+  - loadFile(filePath) - Load CSV/TXT
+  - parseCSV(content) - Parse CSV format
+  - findMatch(fieldName, searchText) - Prefix match
+  - getFieldValues(fieldName) - Get all field values
+
+src/overseer-dock.h
+src/overseer-dock.cpp
+  - OverseerDock - Qt dock widget
+  - createUI() - Type dropdown, Add button, Ingest button, scroll area
+  - onAddOverlay() - Create new overlay instance
+  - onIngestData() - Load CSV file dialog
+  - updateOverlayControlPanel() - Add per-overlay controls
+  - Per-type control panels with all parameters
+  - Position X/Y spinboxes, Scale slider, Visibility toggle, Remove button
+  - Auto-fill field connection
+
+src/overseer-plugin.h
+src/overseer-plugin.cpp
+  - OBS_DECLARE_MODULE()
+  - obs_module_load/unload
+  - Frontend event callbacks
+  - Global dock instance
+
+CMakeLists.txt
+  - Build configuration with Qt5 and OBS SDK
+  - AUTOMOC ON
+  - Proper linking and installation
+
+TEST CASES:
+  ✓ Create Lower Third - logo LEFT, text RIGHT
+  ✓ Position/scale sliders move both together
+  ✓ All 5 types functional
+  ✓ Auto-fill matches from CSV
+  ✓ Multiple overlays work independently
+  ✓ Settings persist on OBS restart
+
+PASTE BACK:
+All 12 source files (complete, compilable, tested)
+CMakeLists.txt (ready to use)
+Any build issues found and fixed
+
+TIME: 4-6 hours complete implementation
+CONFIDENCE: 99% will work first time
+
+GO. NO QUESTIONS.

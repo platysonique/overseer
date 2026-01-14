@@ -1,0 +1,436 @@
+=== CURRENT FILES ===
+./build/CMakeFiles/3.28.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
+./src/moc_overseer-plugin.cpp
+./src/overseer-plugin.cpp
+./liboverseer-plugin.so
+=== CHECKING Q_OBJECT MACRO ===
+56:    Q_OBJECT
+=== CHECKING MOC FILES ===
+No moc files found
+=== MAKEFILE ANALYSIS ===
+120:		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/moc.prf \
+209:		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/moc.prf \
+287:/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/moc.prf:
+332:mocclean: compiler_moc_header_clean compiler_moc_objc_header_clean compiler_moc_source_clean
+334:mocables: compiler_moc_header_make_all compiler_moc_objc_header_make_all compiler_moc_source_make_all
+342:compiler_moc_predefs_make_all: moc_predefs.h
+343:compiler_moc_predefs_clean:
+344:	-$(DEL_FILE) moc_predefs.h
+345:moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp
+346:	g++ -pipe -O2 -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp
+348:compiler_moc_header_make_all:
+349:compiler_moc_header_clean:
+350:compiler_moc_objc_header_make_all:
+351:compiler_moc_objc_header_clean:
+352:compiler_moc_source_make_all: overseer-plugin.moc
+353:compiler_moc_source_clean:
+354:	-$(DEL_FILE) overseer-plugin.moc
+355:overseer-plugin.moc: src/overseer-plugin.cpp \
+356:		moc_predefs.h \
+357:		/usr/lib/qt6/libexec/moc
+358:	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/papaya/Projects/overseer-obs-plugin/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/papaya/Projects/overseer-obs-plugin -I/usr/include/obs -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/overseer-plugin.cpp -o overseer-plugin.moc
+368:compiler_clean: compiler_moc_predefs_clean compiler_moc_source_clean 
+=== SYMBOL TABLE ANALYSIS ===
+000000000000e550 T OverseerDock::addOverlay(OverlayType)
+0000000000008840 t OverseerDock::addOverlay(OverlayType) [clone .cold]
+0000000000011380 T OverseerDock::ingestData(QString const&)
+0000000000008bca t OverseerDock::ingestData(QString const&) [clone .cold]
+000000000000e180 T OverseerDock::moveOverlay(QString const&, int)
+00000000000094e0 T OverseerDock::addTextInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&)
+00000000000074f0 t OverseerDock::addTextInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&) [clone .cold]
+00000000000102c0 T OverseerDock::loadSettings()
+0000000000008a20 t OverseerDock::loadSettings() [clone .cold]
+000000000000ce80 T OverseerDock::saveSettings()
+000000000000853a t OverseerDock::saveSettings() [clone .cold]
+0000000000009fc0 T OverseerDock::addColorInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&)
+0000000000007710 t OverseerDock::addColorInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&) [clone .cold]
+000000000000d6e0 T OverseerDock::onHideClicked()
+000000000000867a t OverseerDock::onHideClicked() [clone .cold]
+000000000000d600 T OverseerDock::onShowClicked()
+0000000000008630 t OverseerDock::onShowClicked() [clone .cold]
+0000000000010d20 T OverseerDock::removeOverlay(QString const&)
+000000000000a2a0 T OverseerDock::addNumberInput(QVBoxLayout*, QString const&, QString const&, QString const&, double)
+00000000000077a6 t OverseerDock::addNumberInput(QVBoxLayout*, QString const&, QString const&, QString const&, double) [clone .cold]
+000000000000d8b0 T OverseerDock::onParamChanged()
+00000000000086c4 t OverseerDock::onParamChanged() [clone .cold]
+000000000000dfc0 T OverseerDock::rebuildControlUI()
+                 U OverseerDock::staticMetaObject
+000000000000d530 T OverseerDock::toggleVisibility(QString const&, bool)
+000000000000e390 T OverseerDock::onMoveLeftClicked()
+00000000000087ac t OverseerDock::onMoveLeftClicked() [clone .cold]
+000000000000e470 T OverseerDock::onMoveRightClicked()
+00000000000087f6 t OverseerDock::onMoveRightClicked() [clone .cold]
+000000000000d7c0 T OverseerDock::updateOverlayParam(QString const&, QString const&, QVariant const&)
+0000000000010240 T OverseerDock::onAddOverlayClicked()
+00000000000089fa t OverseerDock::onAddOverlayClicked() [clone .cold]
+0000000000011c30 T OverseerDock::onIngestDataClicked()
+0000000000008cc8 t OverseerDock::onIngestDataClicked() [clone .cold]
+000000000000be50 T OverseerDock::createOverlayControl(OverlayInstance const&)
+0000000000007f80 t OverseerDock::createOverlayControl(OverlayInstance const&) [clone .cold]
+00000000000112a0 T OverseerDock::onRemoveOverlayClicked()
+0000000000008b80 t OverseerDock::onRemoveOverlayClicked() [clone .cold]
+000000000000a510 T OverseerDock::createParameterControls(QVBoxLayout*, OverlayInstance const&)
+000000000000781e t OverseerDock::createParameterControls(QVBoxLayout*, OverlayInstance const&) [clone .cold]
+00000000000097d0 T OverseerDock::setupUI()
+0000000000007566 t OverseerDock::setupUI() [clone .cold]
+0000000000010ad0 T OverseerDock::OverseerDock(QWidget*)
+0000000000010ad0 T OverseerDock::OverseerDock(QWidget*)
+0000000000008ae6 t OverseerDock::OverseerDock(QWidget*) [clone .cold]
+000000000000d490 T OverseerDock::~OverseerDock()
+000000000000d490 t OverseerDock::~OverseerDock() [clone .localalias]
+000000000000d2f0 T OverseerDock::~OverseerDock()
+000000000000d2f0 T OverseerDock::~OverseerDock()
+0000000000011ef0 W QtPrivate::QSlotObject<void (OverseerDock::*)(), QtPrivate::List<>, void>::impl(int, QtPrivate::QSlotObjectBase*, QObject*, void**, bool*)
+000000000000dcb0 t QtPrivate::QFunctorSlotObject<OverseerDock::addColorInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&)::{lambda()#1}, 0, QtPrivate::List<>, void>::impl(int, QtPrivate::QSlotObjectBase*, QObject*, void**, bool*)
+000000000000873e t QtPrivate::QFunctorSlotObject<OverseerDock::addColorInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&)::{lambda()#1}, 0, QtPrivate::List<>, void>::impl(int, QtPrivate::QSlotObjectBase*, QObject*, void**, bool*) [clone .cold]
+00000000000096e0 T OverseerDock::overlayTypeToString(OverlayType) const
+000000000000d4b0 T non-virtual thunk to OverseerDock::~OverseerDock()
+000000000000d480 T non-virtual thunk to OverseerDock::~OverseerDock()
+                 U vtable for OverseerDock
+=== CHECKING BUILD OUTPUT ===
+=== MANUAL MOC GENERATION ===
+-rw-rw-r-- 1 papaya papaya 6152 Jan 12 14:59 src/overseer-plugin.moc
+=== MODIFYING QMAKE PROJECT ===
+=== CHECKING MOC FILE CONTENT ===
+/****************************************************************************
+** Meta object code from reading C++ file 'overseer-plugin.cpp'
+**
+** Created by: The Qt Meta Object Compiler version 68 (Qt 6.4.2)
+**
+** WARNING! All changes made in this file will be lost!
+*****************************************************************************/
+
+#include <memory>
+#include <QtCore/qmetatype.h>
+#if !defined(Q_MOC_OUTPUT_REVISION)
+#error "The header file 'overseer-plugin.cpp' doesn't include <QObject>."
+#elif Q_MOC_OUTPUT_REVISION != 68
+#error "This file was generated using the moc from 6.4.2. It"
+#error "cannot be used with the include files from this version of Qt."
+#error "(The moc has changed too much.)"
+#endif
+
+#ifndef Q_CONSTINIT
+#define Q_CONSTINIT
+=== CHECKING MOC INCLUDE ===
+
+    return true;
+}
+
+void obs_module_unload(void) {
+    if (dock) {
+        delete dock;
+        dock = nullptr;
+    }
+}
+=== ADDING MOC INCLUDE ===
+=== REBUILDING WITH MOC INCLUDE ===
+g++ -c -pipe -O2 -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC -DQT_NO_DEBUG -DQT_PLUGIN -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -I/usr/include/obs -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -o overseer-plugin.o src/overseer-plugin.cpp
+rm -f liboverseer-plugin.so
+g++ -Wl,-O1 -Wl,-rpath-link,/usr/lib/x86_64-linux-gnu -shared -o liboverseer-plugin.so overseer-plugin.o  -lobs-frontend-api -lobs /usr/lib/x86_64-linux-gnu/libQt6Widgets.so /usr/lib/x86_64-linux-gnu/libQt6Gui.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libQt6Core.so -lpthread -lGLX -lOpenGL    
+=== CHECKING SYMBOL TABLE ===
+000000000001ba40 d qt_incomplete_metaTypeArray<(anonymous namespace)::qt_meta_stringdata_OverseerDock_t, QtPrivate::TypeAndForceComplete<OverseerDock, std::integral_constant<bool, true> >, QtPrivate::TypeAndForceComplete<void, std::integral_constant<bool, false> >, QtPrivate::TypeAndForceComplete<void, std::integral_constant<bool, false> >, QtPrivate::TypeAndForceComplete<void, std::integral_constant<bool, false> >, QtPrivate::TypeAndForceComplete<void, std::integral_constant<bool, false> >, QtPrivate::TypeAndForceComplete<void, std::integral_constant<bool, false> >, QtPrivate::TypeAndForceComplete<void, std::integral_constant<bool, false> >, QtPrivate::TypeAndForceComplete<void, std::integral_constant<bool, false> >, QtPrivate::TypeAndForceComplete<void, std::integral_constant<bool, false> > >
+00000000000183e0 r qt_meta_data_OverseerDock
+0000000000018500 r (anonymous namespace)::qt_meta_stringdata_OverseerDock
+0000000000010500 T OverseerDock::addOverlay(OverlayType)
+000000000000a930 t OverseerDock::addOverlay(OverlayType) [clone .cold]
+0000000000013330 T OverseerDock::ingestData(QString const&)
+000000000000acba t OverseerDock::ingestData(QString const&) [clone .cold]
+0000000000010130 T OverseerDock::moveOverlay(QString const&, int)
+0000000000013ea0 T OverseerDock::qt_metacall(QMetaObject::Call, int, void**)
+0000000000013e40 T OverseerDock::qt_metacast(char const*)
+000000000000b5f0 T OverseerDock::addTextInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&)
+00000000000095e0 t OverseerDock::addTextInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&) [clone .cold]
+0000000000012270 T OverseerDock::loadSettings()
+000000000000ab10 t OverseerDock::loadSettings() [clone .cold]
+000000000000ee30 T OverseerDock::saveSettings()
+000000000000a62a t OverseerDock::saveSettings() [clone .cold]
+000000000000c0d0 T OverseerDock::addColorInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&)
+0000000000009800 t OverseerDock::addColorInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&) [clone .cold]
+000000000000f690 T OverseerDock::onHideClicked()
+000000000000a76a t OverseerDock::onHideClicked() [clone .cold]
+000000000000f5b0 T OverseerDock::onShowClicked()
+000000000000a720 t OverseerDock::onShowClicked() [clone .cold]
+0000000000012cd0 T OverseerDock::removeOverlay(QString const&)
+000000000000c3b0 T OverseerDock::addNumberInput(QVBoxLayout*, QString const&, QString const&, QString const&, double)
+0000000000009896 t OverseerDock::addNumberInput(QVBoxLayout*, QString const&, QString const&, QString const&, double) [clone .cold]
+000000000000f860 T OverseerDock::onParamChanged()
+000000000000a7b4 t OverseerDock::onParamChanged() [clone .cold]
+000000000000ff70 T OverseerDock::rebuildControlUI()
+000000000001baa0 D OverseerDock::staticMetaObject
+000000000000f4e0 T OverseerDock::toggleVisibility(QString const&, bool)
+0000000000010340 T OverseerDock::onMoveLeftClicked()
+000000000000a89c t OverseerDock::onMoveLeftClicked() [clone .cold]
+0000000000010420 T OverseerDock::onMoveRightClicked()
+000000000000a8e6 t OverseerDock::onMoveRightClicked() [clone .cold]
+0000000000013e20 t OverseerDock::qt_static_metacall(QObject*, QMetaObject::Call, int, void**)
+0000000000013dc0 t OverseerDock::qt_static_metacall(QObject*, QMetaObject::Call, int, void**) [clone .part.0]
+000000000000f770 T OverseerDock::updateOverlayParam(QString const&, QString const&, QVariant const&)
+00000000000121f0 T OverseerDock::onAddOverlayClicked()
+000000000000aaea t OverseerDock::onAddOverlayClicked() [clone .cold]
+0000000000013be0 T OverseerDock::onIngestDataClicked()
+000000000000adb8 t OverseerDock::onIngestDataClicked() [clone .cold]
+000000000000de00 T OverseerDock::createOverlayControl(OverlayInstance const&)
+000000000000a070 t OverseerDock::createOverlayControl(OverlayInstance const&) [clone .cold]
+0000000000013250 T OverseerDock::onRemoveOverlayClicked()
+000000000000ac70 t OverseerDock::onRemoveOverlayClicked() [clone .cold]
+000000000000c620 T OverseerDock::createParameterControls(QVBoxLayout*, OverlayInstance const&)
+000000000000990e t OverseerDock::createParameterControls(QVBoxLayout*, OverlayInstance const&) [clone .cold]
+000000000000b8e0 T OverseerDock::setupUI()
+0000000000009656 t OverseerDock::setupUI() [clone .cold]
+0000000000012a80 T OverseerDock::OverseerDock(QWidget*)
+0000000000012a80 T OverseerDock::OverseerDock(QWidget*)
+000000000000abd6 t OverseerDock::OverseerDock(QWidget*) [clone .cold]
+000000000000f440 T OverseerDock::~OverseerDock()
+000000000000f440 t OverseerDock::~OverseerDock() [clone .localalias]
+000000000000f2a0 T OverseerDock::~OverseerDock()
+000000000000f2a0 T OverseerDock::~OverseerDock()
+0000000000014000 W QtPrivate::QSlotObject<void (OverseerDock::*)(), QtPrivate::List<>, void>::impl(int, QtPrivate::QSlotObjectBase*, QObject*, void**, bool*)
+00000000000186a8 u QtPrivate::QMetaTypeForType<OverseerDock>::name
+000000000000fc60 t QtPrivate::QFunctorSlotObject<OverseerDock::addColorInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&)::{lambda()#1}, 0, QtPrivate::List<>, void>::impl(int, QtPrivate::QSlotObjectBase*, QObject*, void**, bool*)
+000000000000a82e t QtPrivate::QFunctorSlotObject<OverseerDock::addColorInput(QVBoxLayout*, QString const&, QString const&, QString const&, QString const&)::{lambda()#1}, 0, QtPrivate::List<>, void>::impl(int, QtPrivate::QSlotObjectBase*, QObject*, void**, bool*) [clone .cold]
+000000000001c680 u QtPrivate::QMetaTypeInterfaceWrapper<OverseerDock>::metaType
+000000000000aed0 T OverseerDock::metaObject() const
+000000000000b7f0 T OverseerDock::overlayTypeToString(OverlayType) const
+000000000000f460 T non-virtual thunk to OverseerDock::~OverseerDock()
+000000000000f430 T non-virtual thunk to OverseerDock::~OverseerDock()
+000000000001bad8 V typeinfo for OverseerDock
+0000000000018678 V typeinfo name for OverseerDock
+000000000001baf0 V vtable for OverseerDock
+00000000000171f0 W QtPrivate::QMetaTypeForType<OverseerDock>::getDefaultCtr()::{lambda(QtPrivate::QMetaTypeInterface const*, void*)#1}::_FUN(QtPrivate::QMetaTypeInterface const*, void*)
+0000000000013f10 W QtPrivate::QMetaTypeForType<OverseerDock>::getDtor()::{lambda(QtPrivate::QMetaTypeInterface const*, void*)#1}::_FUN(QtPrivate::QMetaTypeInterface const*, void*)
+=== FINAL STATUS: ISSUE RESOLVED ===
+✓ Virtual table found: vtable for OverseerDock
+✓ Static meta object found: OverseerDock::staticMetaObject
+✓ Qt meta functions found: qt_metacall, qt_metacast
+✓ Moc file included at end of cpp file
+=== COMPREHENSIVE OVERLAY DISPLAY INVESTIGATION ===
+Mon Jan 12 03:35:00 PM CST 2026
+=== STEP 1: PLUGIN LOADING VERIFICATION ===
+Checking if plugin loads...
+=== STEP 2: PLUGIN BINARY VERIFICATION ===
+total 164
+drwxrwxr-x 2 papaya papaya   4096 Jan 12 14:26 .
+drwxrwxr-x 3 papaya papaya   4096 Jan 12 12:51 ..
+-rwxrwxr-x 1 papaya papaya 144736 Jan 12 15:26 overseer-plugin.so
+-rwxrwxr-x 1 papaya papaya   9460 Jan 12 12:57 overseer.so
+/home/papaya/.config/obs-studio/plugins/overseer-plugin/bin/64bit/overseer-plugin.so: ELF 64-bit LSB shared object, x86-64, version 1 (GNU/Linux), dynamically linked, BuildID[sha1]=2eb438340f3962200e46ca1bb8d7bb131fd95986, not stripped
+=== STEP 3: HTML FILES VERIFICATION ===
+total 124
+drwxrwxr-x 7 papaya papaya  4096 Jan 12 15:15 .
+drwxrwxr-x 4 papaya papaya  4096 Jan 12 15:26 ..
+drwxrwxr-x 2 papaya papaya  4096 Jan 12 13:49 big-lower3rd
+-rw-r--r-- 1 papaya papaya 22398 Jan 12 15:15 big-lower-3rd-output.html
+drwxrwxr-x 2 papaya papaya  4096 Jan 12 13:49 countdown
+-rw-r--r-- 1 papaya papaya 29691 Jan 12 15:15 countdown-output.html
+drwxrwxr-x 2 papaya papaya  4096 Jan 12 13:49 live-bug
+-rw-r--r-- 1 papaya papaya 21406 Jan 12 15:15 live-bug-output.html
+drwxrwxr-x 2 papaya papaya  4096 Jan 12 13:49 logo
+-rw-r--r-- 1 papaya papaya  5505 Jan 12 15:24 logo-output.html
+drwxrwxr-x 2 papaya papaya  4096 Jan 12 13:49 lower-third
+-rw-r--r-- 1 papaya papaya  5025 Jan 12 15:26 lower-third-output.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+=== STEP 4: BROWSER SOURCE CREATION DEBUGGING ===
+Adding more debug output to track browser source creation...
+=== STEP 5: SCENE MANAGEMENT CHECK ===
+Need to check if current scene exists when plugin loads
+=== INVESTIGATION SUMMARY ===
+
+LIKELY ROOT CAUSES IDENTIFIED:
+1. Scene Management: Sources created before scene exists
+2. Scene Addition Timing: Sources not added to scene until SHOW pressed
+3. Position Setting: Scene items not positioned correctly
+4. CSS Parameter Application: Parameters not reaching HTML
+
+FIXES IMPLEMENTED:
+✓ Enhanced debugging throughout browser source lifecycle
+✓ ensureSourceInScene() method to add sources when scene becomes available
+✓ Position setting in updateBrowserSource()
+✓ Comprehensive CSS parameter passing
+
+NEXT STEPS:
+1. Run OBS and check console for debug output
+2. Add overlay and click SHOW
+3. Check if browser source appears in Sources list
+4. Check if scene item is positioned correctly
+5. Verify CSS parameters are applied to HTML
+=== DEBUGGING PLAN ===
+
+STEP-BY-STEP DEBUGGING PROTOCOL:
+
+1. PLUGIN LOADING:
+   - Check: obs_module_load() executes
+   - Expected: '=== OBS MODULE LOAD START ===' in logs
+   - Location: src/overseer-plugin.cpp:900-925
+
+2. DOCK CREATION:
+   - Check: Qt dock widget created and added to OBS
+   - Expected: Overseer Control appears in View → Docks
+   - Location: OverseerDock constructor
+
+3. OVERLAY ADDITION:
+   - Check: Add Overlay button creates overlay instance
+   - Expected: 'Creating browser source for overlay:' in logs
+   - Location: onAddOverlayClicked() → addOverlay() → createBrowserSource()
+
+4. BROWSER SOURCE CREATION:
+   - Check: obs_source_create('browser_source') succeeds
+   - Expected: 'SUCCESS: Browser source created'
+   - Location: createBrowserSource() lines 651-690
+
+5. SCENE ADDITION:
+   - Check: Source added to current scene when SHOW clicked
+   - Expected: 'SUCCESS: Source added to scene'
+   - Location: ensureSourceInScene() lines 819-860
+
+6. POSITIONING:
+   - Check: Scene item positioned correctly
+   - Expected: 'Set position to: X, Y'
+   - Location: updateBrowserSource() position setting
+=== TARGETED LOGGING INSTRUMENTATION ===
+
+ADD THESE LOG LINES AT SPECIFIC LOCATIONS:
+
+1. MODULE LOAD VERIFICATION:
+   File: src/overseer-plugin.cpp
+   Location: obs_module_load() function start
+   Code to add: blog(LOG_INFO, "[OVERSEER] Module load started");
+
+2. DOCK CREATION:
+   File: src/overseer-plugin.cpp
+   Location: OverseerDock constructor, after setupUI()
+   Code to add: blog(LOG_INFO, "[OVERSEER] Dock UI created successfully");
+
+3. SOURCE REGISTRATION VERIFICATION:
+   File: src/overseer-plugin.cpp
+   Location: createBrowserSource() after obs_source_create call
+   Code to add: blog(LOG_INFO, "[OVERSEER] Browser source '%s' created for overlay", instance.id.toUtf8().constData());
+
+4. SCENE ADDITION:
+   File: src/overseer-plugin.cpp
+   Location: ensureSourceInScene() after obs_scene_add()
+   Code to add: blog(LOG_INFO, "[OVERSEER] Source '%s' added to scene", instance.id.toUtf8().constData());
+
+5. VISIBILITY TOGGLE:
+   File: src/overseer-plugin.cpp
+   Location: toggleVisibility() after ensureSourceInScene()
+   Code to add: blog(LOG_INFO, "[OVERSEER] Overlay '%s' visibility set to %s", instance.id.toUtf8().constData(), visible ? "true" : "false");
+
+6. BROWSER SOURCE SETTINGS:
+   File: src/overseer-plugin.cpp
+   Location: updateBrowserSource() after obs_source_update()
+   Code to add: blog(LOG_INFO, "[OVERSEER] Browser source '%s' settings updated", instance.id.toUtf8().constData());
+=== STEP-BY-STEP DEBUGGING PLAN ===
+
+FOLLOW THIS EXACT SEQUENCE:
+
+PHASE 1: PLUGIN LOADING
+1. Rebuild plugin with logging
+2. Start OBS
+3. Check OBS log for: '[OVERSEER] Module load started'
+4. Verify 'Overseer Control' appears in View → Docks menu
+
+PHASE 2: UI INTERACTION
+5. Open Overseer Control dock
+6. Check log for: '[OVERSEER] Dock UI created successfully'
+7. Select 'Logo Overlay' from dropdown
+8. Click 'Add Overlay' button
+
+PHASE 3: SOURCE CREATION
+9. Check log for: '[OVERSEER] Browser source'...'created for overlay'
+10. Verify new control panel appears in dock
+11. Check OBS Sources panel - should show new browser source
+
+PHASE 4: VISIBILITY & SCENE
+12. Click SHOW button on overlay control
+13. Check log for: '[OVERSEER] Overlay'...'visibility set to true'
+14. Check log for: '[OVERSEER] Source'...'added to scene'
+15. Check OBS canvas - OVERLAY SHOULD NOW BE VISIBLE
+
+PHASE 5: TROUBLESHOOTING BRANCHES
+
+IF NO '[OVERSEER] Module load started':
+- Plugin failed to load - check for Qt6 linking errors in log
+
+IF NO '[OVERSEER] Browser source created':
+- obs_source_create() failing - check browser_source availability
+- HTML file path issues - verify ~/.config/obs-studio/overseer-native/overlays/ exists
+
+IF NO '[OVERSEER] Source added to scene':
+- Scene access failing - check obs_frontend_get_current_scene()
+- Scene addition timing - sources created before scene exists
+
+IF SOURCE ADDED BUT NO VISUAL:
+- Position off-screen - check scene item transform
+- Size/scale issues - check browser source dimensions
+- HTML loading failure - check browser console for errors
+- CSS parameter injection failing
+=== CONCRETE CODE CHANGES FOR LOGGING ===
+
+File: src/overseer-plugin.cpp
+
+CHANGE 1 - Add OBS logging include:
+Location: Top of file, after Qt includes
+ADD: #include <util/base.h>  // For blog() logging
+
+CHANGE 2 - Module load logging:
+Location: obs_module_load() function, line ~901
+AFTER: qDebug() << "=== OBS MODULE LOAD START ===";
+ADD: blog(LOG_INFO, "[OVERSEER] Module load started");
+
+CHANGE 3 - Dock creation logging:
+Location: OverseerDock constructor, after setupUI() call
+AFTER: setupUI();
+ADD: blog(LOG_INFO, "[OVERSEER] Dock UI created successfully");
+
+CHANGE 4 - Source creation logging:
+Location: createBrowserSource(), after successful obs_source_create
+AFTER: qDebug() << "SUCCESS: Browser source created";
+ADD: blog(LOG_INFO, "[OVERSEER] Browser source '%s' created for overlay", instance.id.toUtf8().constData());
+
+CHANGE 5 - Scene addition logging:
+Location: ensureSourceInScene(), after successful obs_scene_add
+AFTER: qDebug() << "SUCCESS: Source added to scene";
+ADD: blog(LOG_INFO, "[OVERSEER] Source '%s' added to scene", instance.id.toUtf8().constData());
+
+CHANGE 6 - Visibility logging:
+Location: toggleVisibility(), after ensureSourceInScene call
+AFTER: // Update the browser source visibility
+ADD: blog(LOG_INFO, "[OVERSEER] Overlay '%s' visibility set to %s", instance.id.toUtf8().constData(), visible ? "true" : "false");
+
+CHANGE 7 - Settings update logging:
+Location: updateBrowserSource(), after obs_source_update call
+AFTER: obs_source_update(source, settings);
+ADD: blog(LOG_INFO, "[OVERSEER] Browser source '%s' settings updated", instance.id.toUtf8().constData());
+=== EXPECTED LOG SEQUENCE ===
+
+SUCCESSFUL EXECUTION SHOULD SHOW:
+
+1. [OVERSEER] Module load started
+2. [OVERSEER] Dock UI created successfully
+3. [OVERSEER] Browser source 'uuid-string' created for overlay
+4. [OVERSEER] Overlay 'uuid-string' visibility set to true
+5. [OVERSEER] Source 'uuid-string' added to scene
+6. [OVERSEER] Browser source 'uuid-string' settings updated
+
+=== FAILURE DIAGNOSIS ===
+
+MISSING [OVERSEER] LOGS INDICATE:
+
+• No '[OVERSEER] Module load started' → Plugin not loading
+• Has UI but no '[OVERSEER] Browser source created' → Source creation failing
+• Has source created but no '[OVERSEER] Source added to scene' → Scene access failing
+• Has scene addition but overlay invisible → Position/rendering issue
+
+=== NEXT STEPS ===
+
+1. Apply the 7 code changes above
+2. Rebuild plugin: make clean && qmake && make
+3. Copy to OBS: cp liboverseer-plugin.so ~/.config/obs-studio/plugins/overseer-plugin/bin/64bit/
+4. Restart OBS and check logs
+5. Follow the 15-step debugging protocol
+6. Report which log message is missing - that identifies the failure point
