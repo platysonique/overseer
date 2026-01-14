@@ -1,0 +1,13 @@
+/* Page Outliner (https://app.overlays.uno) */ 
+
+div {
+	outline: 1px solid rgba(255, 0, 0, 1) !important;
+}
+
+iframe {
+	outline: 1px solid rgba(255, 0, 0, 1) !important;
+}
+
+p {
+	outline: 1px solid rgba(255, 0, 0, 1) !important;
+}

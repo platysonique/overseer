@@ -1,0 +1,3 @@
+// Ad-related code removed for offline development
+// This file previously contained Google AdSense and ad-serving code
+console.log("Ad code disabled for offline development");

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)https://app.overlays.uno/widgets/3616/serve/2/output.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="./css" media="all"></head><body style="margin: 0;	background:none; overflow: hidden;">
+	<div id="container" style="position: absolute; left:0%; top:0%; width: 100%; height: 100%"><div data-reactroot="" style="width: 100%; height: 100%;"><div class="onair-renderer sub-composition composition-instance" style="visibility: inherit; width: 100%; height: 100%; z-index: 0; position: absolute;"><div id="onairbd26e63e-7498-44e9-87eb-a38f4872581d" data-singular-type="group" data-singular-name="timeGroup" style="visibility: inherit; width: 100%; height: 100%; z-index: 0; position: absolute; pointer-events: none;"><div data-singular-type="widget" data-singular-name="format" id="onair5f03e05d-a551-4d5b-bce7-b56a22743cee" style="position: absolute; left: 0px; top: 0px; height: 100%; width: 100%; visibility: inherit; z-index: 0; pointer-events: none; opacity: 1;"><div id="behaviorAnimation1" style="position: absolute; left: 0px; top: 0px; height: 100%; width: 100%;"><div dir="auto" style="visibility: inherit; opacity: 100; font-family: Overpass; font-weight: 400; line-height: 1.5; text-align: left; color: rgb(255, 255, 255); letter-spacing: 0px; word-spacing: 0px; text-indent: 0px; padding-left: 0px; position: absolute; top: 100%; transform: translateY(-93%); text-transform: none; font-variant: normal; width: 100%; text-overflow: clip; white-space: pre; overflow-wrap: normal; word-break: normal; overflow: visible; font-size: 35px; clip: rect(0px, 409.412px, 52.9412px, 0px); max-height: 100%; text-shadow: none;">10:17 AM</div></div></div></div></div></div></div>
+	<script src="./moment-with-locales.min.js"></script>
+	<script src="./singularwidget.js"></script>
+
+  <script>
+
+
+	// Add this snippet
+	SingularWidget.init({
+		onInit: onSingularInit,
+		onValue: onSingularValue,
+		onEditComp: onSingularEditComp
+	});
+
+	var SingularTimeControl = null;
+
+	var windowWidth = 0;
+	var windowHeight = 0;
+
+	var intervalID = null;
+	var timeoutID = null;
+	var intervalTime = 1000;
+
+	// we always show server time and not actually local time of day. 
+	// This will give the difference between the local clock and the server
+	var offsetToServerTime = 0;
+
+	// remeber all the sub comp instance related stuff
+	var compositionID = null;
+	var compositionInstance = null;
+	var compositionInstanceIsOut = false;
+
+	var format = "HH:mm:ss";
+	var leadingZeros = false;
+	var frequency = "1sec";
+	var widgetNodeData = null;
+	var language = '';
+	var timezone = 'local';
+
+	// the amount the user wants to offset the time of day
+	var offset = 0;
+
+
+	window.addEventListener("resize", function() {
+		if (windowWidth != window.innerWidth || windowHeight != window.innerHeight) {
+			windowWidth = window.innerWidth;
+			windowHeight = window.innerHeight;
+			
+			if (compositionInstance) {
+				compositionInstance.resize(windowWidth, windowHeight);
+			}
+		}
+	});
+
+	function onSingularInit(params) {
+		if (params && params.OffsetToServerTime !== undefined) {
+			offsetToServerTime = params.OffsetToServerTime;
+		}
+		windowWidth = window.innerWidth;
+		windowHeight = window.innerHeight;
+	}
+
+	function onSingularEditComp(fieldId) {
+		var createWidgetNode = function(id, title, type, defaultValue) {
+			return {
+				"id": id,
+				"type": type,
+				"title": title,
+				"defaultValue": defaultValue
+			};
+		}
+	
+		var widgetNodes = [];
+		widgetNodes.push(createWidgetNode("format", "Format", "text", "00:00:00"));
+
+		// the components of the date / time
+		widgetNodes.push(createWidgetNode("years", "Years", "number", "0"));
+		widgetNodes.push(createWidgetNode("months", "Months", "number", "0"));
+		widgetNodes.push(createWidgetNode("days", "Days", "number", "0"));
+		widgetNodes.push(createWidgetNode("hours", "Hours", "number", "0"));
+		widgetNodes.push(createWidgetNode("minutes", "Minutes", "number", "0"));
+		widgetNodes.push(createWidgetNode("seconds", "Seconds", "number", "0"));
+		widgetNodes.push(createWidgetNode("ms", "Milliseconds", "number", "0"));
+		widgetNodes.push(createWidgetNode("secondsMs", "Seconds & Milliseconds", "number", "0"));
+
+		// angle for time
+		widgetNodes.push(createWidgetNode("hoursAngle12", "Hours Angle 12 hours", "number", "0"));
+		widgetNodes.push(createWidgetNode("hoursAngle24", "Hours Angle 24 hours", "number", "0"));
+		widgetNodes.push(createWidgetNode("minutesAngle", "Minutes Angle", "number", "0"));
+		widgetNodes.push(createWidgetNode("secondsAngle", "Seconds Angle", "number", "0"));
+		widgetNodes.push(createWidgetNode("secondsMsAngle", "Seconds & Milliseconds Angle", "number", "0"));
+
+		// percent for time
+		widgetNodes.push(createWidgetNode("hoursPercent", "Hours %", "number", "0"));
+		widgetNodes.push(createWidgetNode("minutesPercent", "Minutes %", "number", "0"));
+		widgetNodes.push(createWidgetNode("secondsPercent", "Seconds %", "number", "0"));
+		widgetNodes.push(createWidgetNode("secondsMsPercent", "Seconds & Milliseconds %", "number", "0"));
+
+		// month name
+		widgetNodes.push(createWidgetNode("monthName", "Month Name", "text", "Month"));
+
+		return {
+			width: windowWidth,
+			height: windowHeight,
+			widgetNodes: widgetNodes
+		};
+	}
+				
+	function onSingularValue(json) {
+		if (json.composition !== undefined && json.composition != compositionID) {
+			compositionID = json.composition;
+			rebuildSubcompInstance();
+		}
+
+		var updateSubComp = false;
+
+	
+		var convertToNumber = function(value) {
+			var v = parseFloat(value);
+			if (isNaN(v)) return 0;
+			return v;
+		}
+
+		var processNumberParameter = function(newValue, oldValue) {
+			if (newValue !== undefined) {
+				let n = convertToNumber(newValue);
+				if (oldValue != n) {
+					updateSubComp = true;
+				}
+				return n;
+			}
+			return oldValue;
+		}
+		var processParameter = function(newValue, oldValue) {
+			if (newValue !== undefined) {
+				if (newValue != oldValue) {
+					updateSubComp = true;
+				}
+				return newValue;
+			}
+			return oldValue;
+		}
+
+		// with this we can shift the time relative of the time of day
+		offset = processNumberParameter(json.offset, offset) * 1000;
+
+		// a formatted string of date and time
+		format = processParameter(json.format, format);
+
+		// hours and minutes will be send with leading zeros to the sub comp
+		leadingZeros = processParameter(json.leadingZeros, leadingZeros);
+
+		language = processParameter(json.language, language);
+
+		timezone = processParameter(json.timezone, timezone);
+		if (timezone != 'local') {
+			timezone = convertToNumber(timezone);
+		}
+
+		// this will define how many times we call the update function. 
+		// we do not want to update the output every second when we are only interested in minutes
+		frequency = processNumberParameter(json.frequency, frequency);
+		intervalTime = frequency;
+		_startInterval();
+
+		// if any of the values have changed send new data to the sub comp
+		if (updateSubComp) {
+			updateSubcompInstance();
+		}
+	}
+
+	function rebuildSubcompInstance() {
+		if (compositionInstance != null) {
+			compositionInstance.destroy();
+			compositionInstance = null;
+		}
+
+		// create new composition
+		SingularWidget.instantiate(compositionID, document.getElementById('container'), function(id) { 
+			compositionInstance = id;
+
+			// it is possible that we already have data for the widget node before instanciation was finished
+			if (widgetNodeData) {
+				compositionInstance.setWidgetNode(widgetNodeData);
+				compositionInstance.jumpTo('In');
+				compositionInstanceIsOut = false;
+			} else {
+				// there is on data so hide the graphics. 
+				compositionInstance.jumpTo('Out');
+				compositionInstanceIsOut = true;
+			}
+		});
+	}
+
+	function updateSubcompInstance() {
+		// use moment.js to format the time 
+		var obj = moment(_getCurrentTime());
+
+		// set the offset to UTC, which defines the timezone
+		if (timezone != 'local') {
+			obj.utcOffset(timezone);
+		}
+
+		// change the language
+		if (language == 'device') {
+			moment.locale(window.navigator.userLanguage || window.navigator.language);
+		} else {
+			moment.locale(language);
+		}
+
+		var formattedString = obj.format(format);
+
+		// remember the data we put into the widget node
+		var padZeros = function(number) {
+			if (leadingZeros && number < 10) {
+				return "0" + number;
+			}
+			return number;
+		}
+		
+		// this is how many seconds have passed since midnight
+		let secondsOfDay = obj.hours() * 3600 + obj.minutes() * 60 + obj.seconds();
+
+		// we send this data to the sub comp instance
+		widgetNodeData = {
+			format:	formattedString,
+			years: obj.year(),
+			months: padZeros(obj.month() + 1),
+			days: padZeros(obj.date()),
+			hours: padZeros(obj.hours()),
+			minutes: padZeros(obj.minutes()),
+			seconds: padZeros(obj.seconds()),
+			ms: obj.milliseconds(),
+			secondsMs: obj.seconds() + '.' + obj.milliseconds(),
+			hoursAngle12: secondsOfDay * 360.0 / 3600.0 / 12.0,
+			hoursAngle24: secondsOfDay * 360.0 / 3600.0 / 24.0,
+			minutesAngle: obj.minutes() / 60.0 * 360.0,
+			secondsAngle: obj.seconds() / 60.0 * 360.0,
+			secondsMsAngle: (obj.seconds() + obj.milliseconds() / 1000.0) / 60.0 * 360.0,
+			hoursPercent: obj.hours() / 24.0 * 100.0,
+			minutesPercent: obj.minutes() / 60.0 * 100.0,
+			secondsPercent: obj.seconds() / 60.0 * 100.0,
+			secondsMsPercent: (obj.seconds() + obj.milliseconds() / 1000.0) / 60.0 * 100.0,
+			monthName: obj.format('MMMM')
+		};
+
+		// we have a composition
+		if (compositionInstance) {
+			// apply the data to the widget node
+			compositionInstance.setWidgetNode(widgetNodeData);
+
+			// when we update the sub comp instance with real data we take it in otherwise we show zeros
+			if (compositionInstanceIsOut == true) {
+				compositionInstance.jumpTo('In');
+				compositionInstanceIsOut = false;
+			}
+		}
+	}
+
+	var _getCurrentTime = function () {
+		return Date.now() + offsetToServerTime + offset;
+	}
+
+
+	var _clearInterval = function () {
+		// clear the interval that exists
+		if (intervalID) {
+			clearInterval(intervalID);
+			intervalID = null;
+		}
+
+		// clear the timeout
+		if (timeoutID) {
+			clearTimeout(timeoutID);
+			timeoutID = null;
+		}
+	}
+
+	var _startInterval = function () {
+		// now caclulate the remainder with the running time and interval
+		// so that our setInterval below always hits at exactly that right time
+		let remainder = _getCurrentTime() % intervalTime;
+
+		// stop the interval and timeout
+		_clearInterval();
+
+		// create a timeout to wait for the difference between interval time and remainder.
+		// we try to get the timeout to run exactly on the time where the intervaltime changes.
+		// e.g. for 1sec the interval should execute so that the time in the updateSubCompInstance function
+		// is as close to the second as possible. For 0.1sec it doesn't really matter, for sec also, but minute is important.
+		timeoutID = setTimeout(function () {
+			updateSubcompInstance();
+
+			// create the new interval
+			intervalID = setInterval(function () {
+				updateSubcompInstance();
+			}, intervalTime);
+		}, intervalTime - remainder);
+	}
+
+  </script>
+
+
+</body></html>
